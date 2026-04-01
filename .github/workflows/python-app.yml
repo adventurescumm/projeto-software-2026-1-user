@@ -35,7 +35,7 @@ jobs:
         context: .
         file: ./Dockerfile
         push: true
-        tags: ezambomsantana/users-ci:${{ github.sha }}
+        tags: weirdessen/users-ci:${{ github.sha }}
         
     - name: executing remote ssh commands using password
       uses: appleboy/ssh-action@master
