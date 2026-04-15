@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from db import db
 from models import User
+from validate import token_required
 import os
 
 def create_app():
@@ -19,6 +20,7 @@ def create_app():
 
 
     @app.route("/users", methods=["POST"])
+    @token_required(None)
     def create_user():
         data = request.json
 
@@ -37,6 +39,7 @@ def create_app():
         }), 201
 
     @app.route("/users/<uuid:user_id>", methods=["GET"])
+    @token_required(None)
     def get_user(user_id):
         user = User.query.get_or_404(user_id)
 
@@ -47,6 +50,7 @@ def create_app():
         }), 200
 
     @app.route("/users/<uuid:user_id>", methods=["DELETE"])
+    @token_required("ADMIN")
     def delete_user(user_id):
         user = User.query.get_or_404(user_id)
 
@@ -56,6 +60,7 @@ def create_app():
         return "", 204
 
     @app.route("/users", methods=["GET"])
+    @token_required(None)
     def list_users():
         users = User.query.all()
 
