@@ -35,9 +35,13 @@ def token_required(required_role):
                     audience=API_AUDIENCE,
                     issuer=f'https://{AUTH0_DOMAIN}/'
                 )
-                user_role = payload.get("role")
+                user_role = payload.get("https://social-insper.com/roles")
 
-                if user_role != required_role and required_role is not None:
+                print(user_role)
+                print(user_role[0])
+                print(required_role)
+
+                if required_role != user_role[0] and required_role is not None:
                     return jsonify(
                         {
                             'message': f"Acesso negado! Somente {required_role} é permitido!"
